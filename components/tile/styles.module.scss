@@ -1,0 +1,35 @@
+.tile {
+  transition: all 0.1s;
+  font-size: 2em;
+  color: white;
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.192);
+  border: 0.05em solid #39393cad;
+  text-transform: uppercase;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  background-color: #9c969475;
+  border-radius: 1rem;
+
+  &.active {
+    background: #53494575;
+  }
+
+  &.notInWord {
+    background: #4b4b4e;
+  }
+
+  &.inWordWrongPosition {
+    background: #e4ca53;
+  }
+
+  &.inWordRightPosition {
+    background: #66af60;
+  }
+
+  &.lastTile {
+    display: none;
+  }
+}
