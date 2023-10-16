@@ -3,7 +3,7 @@
   font-size: 2em;
   color: white;
   text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.192);
-  border: 0.05em solid #39393cad;
+  border: 0.05em solid #10105fad;
   text-transform: uppercase;
   font-weight: bold;
   display: flex;
@@ -15,6 +15,7 @@
 
   &.active {
     background: #53494575;
+    border: 1px solid #e6e2e175;
   }
 
   &.notInWord {
@@ -22,11 +23,11 @@
   }
 
   &.inWordWrongPosition {
-    background: #e4ca53;
+    background: #bba649;
   }
 
   &.inWordRightPosition {
-    background: #66af60;
+    background: rgb(94, 160, 88);
   }
 
   &.lastTile {

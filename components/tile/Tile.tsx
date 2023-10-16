@@ -7,6 +7,7 @@ interface TileProps {
   tileNumber: number;
   isEndOfRow: boolean;
   wordColors: number[];
+  setPositionLetter: Function;
 }
 
 export function Tile({
@@ -15,6 +16,7 @@ export function Tile({
   tileNumber,
   isEndOfRow,
   wordColors,
+  setPositionLetter,
 }: TileProps) {
   const [isActive, setIsActive] = useState(false);
 
@@ -54,5 +56,5 @@ export function Tile({
     }
   }
 
-  return <div className={`${styles.tile} ${checkTileClass()}`}>{letter}</div>;
+  return <div className={`${styles.tile} ${checkTileClass()}`} onClick={()=>setPositionLetter(tileNumber)}>{letter}</div>;
 }

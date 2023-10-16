@@ -104,6 +104,10 @@ const Game: NextPage = () => {
     dailyWord,
   ]);
 
+  function handleChangeActiveTile(tileNumber: number) {
+    setActiveTile(tileNumber);
+  }
+
   function handleLetterInsertion(letter: string) {
     if (activeTile > rowStart + 4) return;
     if (activeTile >= 30) return;
@@ -275,7 +279,11 @@ const Game: NextPage = () => {
       }
     }
   }
-
+  console.log("Game.tsx: Game: tiles: ", tiles)
+  console.log("Game.tsx: Game: activeTile: ", activeTile)
+  console.log("Game.tsx: Game: isEndOfRow: ", isEndOfRow)
+  console.log("Game.tsx: Game: rowStart: ", rowStart)
+  console.log("Game.tsx: Game: wordColors: ", wordColors)
   return (
     <>
       <GuessGrid
@@ -285,6 +293,7 @@ const Game: NextPage = () => {
         setIsEndOfRow={setIsEndOfRow}
         rowStart={rowStart}
         wordColors={wordColors}
+        setPositionLetter={handleChangeActiveTile}
       />
       <Keyboard
         notInWord={notInWord}

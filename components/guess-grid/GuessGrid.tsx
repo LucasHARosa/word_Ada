@@ -9,6 +9,7 @@ interface GuessGridProps {
   setIsEndOfRow: Function;
   rowStart: number;
   wordColors: number[];
+  setPositionLetter: Function;
 }
 
 export function GuessGrid({
@@ -17,12 +18,13 @@ export function GuessGrid({
   isEndOfRow,
   setIsEndOfRow,
   rowStart,
-  wordColors
+  wordColors,
+  setPositionLetter,
 }: GuessGridProps) {
   useEffect(() => {
     setIsEndOfRow(activeTile === rowStart + 5);
   }, [activeTile]);
-
+  
   return (
     <div className={styles.guessGrid}>
       {grid.map((tile, index) => (
@@ -33,6 +35,7 @@ export function GuessGrid({
           tileNumber={index}
           isEndOfRow={isEndOfRow}
           wordColors={wordColors}
+          setPositionLetter={setPositionLetter}
         />
       ))}
     </div>
