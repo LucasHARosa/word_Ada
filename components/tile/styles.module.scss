@@ -1,9 +1,9 @@
 .tile {
-  transition: all 0.1s;
+  transition: all 0.7ds;
   font-size: 2em;
   color: white;
   text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.192);
-  border: 0.05em solid #10105fad;
+  border: 0.05em solid #332a64;
   text-transform: uppercase;
   font-weight: bold;
   display: flex;
@@ -11,10 +11,10 @@
   align-items: center;
   user-select: none;
   background-color: #9c969475;
-  border-radius: 1rem;
+  border-radius: 0.8rem;
 
   &.active {
-    background: #53494575;
+    background: #463f4a81;
     border: 1px solid #e6e2e175;
   }
 
@@ -23,11 +23,11 @@
   }
 
   &.inWordWrongPosition {
-    background: #bba649;
+    background: #c0a428;
   }
 
   &.inWordRightPosition {
-    background: rgb(94, 160, 88);
+    background: #3a8519;
   }
 
   &.lastTile {

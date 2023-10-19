@@ -105,6 +105,7 @@ const Game: NextPage = () => {
   ]);
 
   function handleChangeActiveTile(tileNumber: number) {
+    if(tileNumber > rowStart + 4) return;
     setActiveTile(tileNumber);
   }
 

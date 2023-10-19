@@ -5,6 +5,7 @@ import { Tutorial } from "../components/tutorialModal/Tutorial";
 import { createContext, useEffect, useState } from "react";
 import { EndScreen } from "../components/endModal/EndScreen";
 import { getDailyWord } from "../lib/helpers";
+import { ParticleAmong } from "../components/Particles/particlesAmong";
 
 interface gameEndedContext {
   gameEnded: boolean;
@@ -64,6 +65,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
         <Toaster />
       </gameEndedContext.Provider>
+      <ParticleAmong/>
     </>
   );
 }
