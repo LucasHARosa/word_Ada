@@ -37,6 +37,7 @@ const Game: NextPage = () => {
   const rowStart = activeRow * 5;
   const keyLetters = "abcdefghijklmnopqrstuvwxyz";
   const [dailyWord, setDailyWord] = useState("");
+  const [words, setWords] = useState<string[]>([]);
 
   const gameData: gameData = {
     tiles: tiles,
@@ -51,6 +52,8 @@ const Game: NextPage = () => {
     inWordCorrectPosition: inWordCorrectPosition,
     gameEnded: gameEnded,
     wordAtTime: dailyWord,
+    words:words,
+    wordsScore:[0],
   };
 
   useEffect(() => {
@@ -305,6 +308,9 @@ const Game: NextPage = () => {
         handleDelete={handleDelete}
         handleSubmit={handleSubmit}
       />
+      <button>
+        {dailyWord}
+      </button>
     </>
   );
 };

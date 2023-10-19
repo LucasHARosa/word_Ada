@@ -3,6 +3,7 @@ import { Words } from "./words";
 import { gameData, setters } from "../lib/interfaces";
 import { targetWords } from "./targetWords";
 
+
 export function getAvailableTiles(rowGuess: string[]) {
   let availableTiles: number[] = [];
 
@@ -23,6 +24,7 @@ export function validateWord(word: string) {
 }
 
 export function checkWin(word: string[], dailyWord: string[]) {
+  console.log(word, dailyWord);
   if (word.toString() === dailyWord.toString()) {
     return true;
   }
@@ -148,15 +150,18 @@ export function getCopyPaste(wordColors: number[]) {
         break;
     }
   });
-  copyPaste += "\n\nJogue em: https://verbo.vercel.app/";
+  //copyPaste += "\n\nJogue em: https://verbo.vercel.app/";
   navigator.clipboard.writeText(copyPaste);
 }
 
 export function getDailyWord() {
-  const offsetFromDate = new Date(2022, 0, 1).getTime();
-  const msOffset = Date.now() - offsetFromDate;
-  const dayOffset = msOffset / 1000 / 60 / 60 / 24;
-  return targetWords[Math.ceil(dayOffset)];
+  // const palavrasArray = Object.entries(palavras);
+  // const randomIndex = Math.floor(Math.random() * palavrasArray.length);
+  // const [palavraOriginal, palavraTraduzida] = palavrasArray[randomIndex];
+  // console.log("palavras",palavraOriginal, palavraTraduzida);
+  // return { palavraOriginal, palavraTraduzida };
+  const randomIndex = Math.floor(Math.random() * targetWords.length);
+  return targetWords[randomIndex];
 }
 
 export function getLocalStorage(key: string) {

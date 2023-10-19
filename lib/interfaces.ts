@@ -11,6 +11,8 @@ export interface gameData {
   inWordCorrectPosition: string[];
   gameEnded: boolean;
   wordAtTime: string;
+  words: string[];
+  wordsScore: number[];
 }
 
 export interface setters {
