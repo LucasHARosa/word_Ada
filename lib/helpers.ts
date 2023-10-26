@@ -2,6 +2,7 @@ import toast from "react-hot-toast";
 import { Words } from "./words";
 import { gameData, setters } from "../lib/interfaces";
 import { targetWords } from "./targetWords";
+import axios from "axios";
 
 
 export function getAvailableTiles(rowGuess: string[]) {
@@ -83,6 +84,19 @@ export function saveGameData(gameData: gameData) {
   localStorage.setItem("@Verbo:gameData", JSON.stringify(gameData));
 }
 
+export function saveGameWord(word: string) {
+  localStorage.setItem("@Verbo:word", word);
+}
+
+export function getGameWord() {
+  const word = localStorage.getItem("@Verbo:word");
+  return word;
+}
+
+export function getLocalStorage(key: string) {
+  return JSON.parse(localStorage.getItem(key) || "{}");
+}
+
 export function loadGameData(gameData: gameData, setters: setters) {
   setters.setTiles(gameData.tiles);
   setters.setActiveRow(gameData.activeRow);
@@ -124,7 +138,7 @@ export function getCopyPaste(wordColors: number[]) {
   }
   
 
-  let copyPaste = `Joguei Verbo #${getGameNum()}   ${num}/6 \n\n`;
+  let copyPaste = `Joguei Word-ADA #${getGameNum()}   ${num}/6 \n\n`;
   let indexes = [5, 10, 15, 20, 25];
   noZeros.forEach((el, index) => {
     switch (el) {
@@ -160,8 +174,25 @@ export function getDailyWord() {
   // return { palavraOriginal, palavraTraduzida };
   const randomIndex = Math.floor(Math.random() * targetWords.length);
   return targetWords[randomIndex];
+
 }
 
-export function getLocalStorage(key: string) {
-  return JSON.parse(localStorage.getItem(key) || "{}");
+export interface IWord {
+  id: number;
+  word: string;
 }
+
+export async function getWord(): Promise<IWord> {
+  try{
+    const response = await axios.get("http://localhost:8080/api/v1/word");
+    console.log("response",response.data);
+    return response.data;
+  }catch(err){
+    console.log(err);
+    const wordData = getDailyWord();
+    return {id: 0, word: wordData};
+  }
+}
+
+
+

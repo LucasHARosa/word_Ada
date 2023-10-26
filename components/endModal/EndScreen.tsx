@@ -1,10 +1,10 @@
 import Modal from "react-modal";
-import { getCopyPaste } from "../../lib/helpers";
+import { getCopyPaste, getGameWord } from "../../lib/helpers";
 
 interface EndScreenProps {
   isOpen: boolean;
   onRequestClose: () => void;
-  dailyWord: string;
+  dailyWord?: string;
   wordColors: number[];
 }
 
@@ -14,6 +14,10 @@ export function EndScreen({
   dailyWord,
   wordColors,
 }: EndScreenProps) {
+  const word = "a";
+  //const word = getGameWord()
+  //const word = getLocalStorage("@Verbo:word");
+  console.log("palavra = >",word)
   return (
     <Modal
       isOpen={isOpen}
@@ -22,10 +26,10 @@ export function EndScreen({
       className="react-modal-content"
       ariaHideApp={false}
     >
-      <h1 className="dailyWordInfo">Palavra do dia: {dailyWord}</h1>
-      <button className="share" onClick={() => getCopyPaste(wordColors)}>
+      <h1 className="dailyWordInfo">Palavra do dia: {dailyWord} </h1>
+      {/* <button className="share" onClick={() => getCopyPaste(wordColors)}>
         Copiar Resultado
-      </button>
+      </button> */}
       <span className="creatorInfo">
         Jogo feito por:{" "}
         <a href="https://github.com/LucasHARosa" target="_blank" rel="noreferrer">

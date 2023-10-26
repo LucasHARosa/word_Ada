@@ -6,10 +6,12 @@ import toast from "react-hot-toast";
 import {
   checkWord,
   getAvailableTiles,
-  getDailyWord,
+  getGameWord,
   getLocalStorage,
+  getWord,
   loadGameData,
   saveGameData,
+  saveGameWord,
   toastError,
 } from "../lib/helpers";
 import { validateWord } from "../lib/helpers";
@@ -17,6 +19,7 @@ import { checkWin } from "../lib/helpers";
 import { gameData } from "../lib/interfaces";
 import { useContext } from "react";
 import { gameEndedContext } from "../pages/_app";
+import axios from "axios";
 
 const Game: NextPage = () => {
   const arr = Array.apply(null, Array(30)).map(() => "");
@@ -29,7 +32,7 @@ const Game: NextPage = () => {
   const [wordColors, setWordColors] = useState(arr2);
   const [isKeyboardActive, setIsKeyboardActive] = useState(true);
   const [notInWord, setNotInWord] = useState<string[]>([]);
-  const { gameEnded, setGameEnded } = useContext(gameEndedContext);
+  const {gameEnded, setGameEnded } = useContext(gameEndedContext);
   const [inWordWrongPosition, setInWordWrongPosition] = useState<string[]>([]);
   const [inWordCorrectPosition, setInWordCorrectPosition] = useState<string[]>(
     []
@@ -38,6 +41,7 @@ const Game: NextPage = () => {
   const keyLetters = "abcdefghijklmnopqrstuvwxyz";
   const [dailyWord, setDailyWord] = useState("");
   const [words, setWords] = useState<string[]>([]);
+  
 
   const gameData: gameData = {
     tiles: tiles,
@@ -58,7 +62,6 @@ const Game: NextPage = () => {
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
-
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
@@ -67,8 +70,12 @@ const Game: NextPage = () => {
   }, [tiles, rowStart]);
 
   useEffect(() => {
-    setDailyWord(getDailyWord());
+    getWordApi();
+  },[]);
 
+  useEffect(() => {
+    // setDailyWord(getDailyWord());
+    
     const previousGameData: gameData = getLocalStorage("@Verbo:gameData");
     const setters = {
       setTiles: setTiles,
@@ -83,12 +90,12 @@ const Game: NextPage = () => {
       setInWordCorrectPosition: setInWordCorrectPosition,
       setGameEnded: setGameEnded,
     };
-    let currentDailyWord = getDailyWord();
+    let currentDailyWord = dailyWord;
     if (currentDailyWord !== previousGameData.wordAtTime) {
       return;
     }
     loadGameData(previousGameData, setters);
-  }, []);
+  }, [setDailyWord]);
 
   useEffect(() => {
     saveGameData(gameData);
@@ -106,11 +113,23 @@ const Game: NextPage = () => {
     gameEnded,
     dailyWord,
   ]);
+  //Função ADA
+  async function getWordApi(){
+    const a = getGameWord();
+    console.log("Aqui a palavra2 =>",a);
+    const wordApi = getWord();
+    if(wordApi !== undefined){
+      saveGameWord((await wordApi).word);
+      setDailyWord((await wordApi).word);
+      console.log("Aqui a palavra =>",(await wordApi).word);
+    }
+  }
 
   function handleChangeActiveTile(tileNumber: number) {
     if(tileNumber > rowStart + 4) return;
     setActiveTile(tileNumber);
   }
+
 
   function handleLetterInsertion(letter: string) {
     if (activeTile > rowStart + 4) return;
@@ -283,7 +302,9 @@ const Game: NextPage = () => {
       }
     }
   }
- 
+  function handleclick(){
+    console.log("aaa")
+  }
   return (
     <>
       <GuessGrid
@@ -304,7 +325,7 @@ const Game: NextPage = () => {
         handleDelete={handleDelete}
         handleSubmit={handleSubmit}
       />
-      <button>
+      <button onClick={()=>handleclick()}>
         {dailyWord}
       </button>
     </>
