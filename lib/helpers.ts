@@ -122,9 +122,7 @@ export function getCopyPaste(wordColors: number[]) {
   if (num === 6 && !hasWon) {
     num = "X";
   }
-  console.log(hasWon);
-  console.log(num);
-  console.log(lastRow);
+  
 
   let copyPaste = `Joguei Verbo #${getGameNum()}   ${num}/6 \n\n`;
   let indexes = [5, 10, 15, 20, 25];

@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const firstTime = localStorage.getItem("@Verbo:FirstTime");
     if (firstTime !== null) {
-      setIsOpen(false);
+      // setIsOpen(false);
     }
     localStorage.setItem("@Verbo:FirstTime", "True");
     const dailyWord = getLocalStorage("@Verbo:gameData");

@@ -38,16 +38,24 @@ body {
   width: 100%;
   max-width: 30%;
   background: #beb5b4;
-  padding: 3rem;
+  padding: 2rem 3rem;
   position: relative;
   border-radius: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
+  p{
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    align-items: flex-start;
+  }
 
   img {
     width: 15em;
+    margin: 10px;
   }
 
   @media (max-width: 1400px) {

@@ -283,11 +283,7 @@ const Game: NextPage = () => {
       }
     }
   }
-  console.log("Game.tsx: Game: tiles: ", tiles)
-  console.log("Game.tsx: Game: activeTile: ", activeTile)
-  console.log("Game.tsx: Game: isEndOfRow: ", isEndOfRow)
-  console.log("Game.tsx: Game: rowStart: ", rowStart)
-  console.log("Game.tsx: Game: wordColors: ", wordColors)
+ 
   return (
     <>
       <GuessGrid
