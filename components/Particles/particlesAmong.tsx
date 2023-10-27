@@ -6,7 +6,7 @@ import { loadSlim } from "tsparticles-slim"; // if you are going to use `loadSli
 
 export function ParticleAmong ()  {
     const particlesInit = useCallback(async (engine: Engine) => {
-        console.log(engine);
+        //console.log(engine);
 
         await loadSlim(engine);
     }, []);

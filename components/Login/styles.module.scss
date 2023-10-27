@@ -1,0 +1,48 @@
+.loginmodal {
+  
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+   
+
+  
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    div {
+      margin-bottom: 15px;
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #770da8;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: background-color 0.3s;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  
+}

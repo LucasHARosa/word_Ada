@@ -23,6 +23,14 @@ export function validateWord(word: string) {
   }
   return false;
 }
+//ada
+export function validateWordAPI(words:Array<IWord>,word: string) {
+  console.log("validateWordAPI",words.length,word);
+  if (words.some((el) => el.word === word)) {
+    return true;
+  }
+  return false;
+}
 
 export function checkWin(word: string[], dailyWord: string[]) {
   console.log(word, dailyWord);
@@ -167,14 +175,8 @@ export function getCopyPaste(wordColors: number[]) {
 }
 
 export function getDailyWord() {
-  // const palavrasArray = Object.entries(palavras);
-  // const randomIndex = Math.floor(Math.random() * palavrasArray.length);
-  // const [palavraOriginal, palavraTraduzida] = palavrasArray[randomIndex];
-  // console.log("palavras",palavraOriginal, palavraTraduzida);
-  // return { palavraOriginal, palavraTraduzida };
   const randomIndex = Math.floor(Math.random() * targetWords.length);
   return targetWords[randomIndex];
-
 }
 
 export interface IWord {
@@ -183,17 +185,17 @@ export interface IWord {
 }
 
 
-
-export async function getWord(): Promise<IWord> {
-  console.log("getWord");
+//ADA
+export async function getWord(token:string): Promise<IWord> {
+  
   const config = {
     headers: {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6Imx1QGdtYWlsLmNvbSIsImV4cCI6MTY5ODM3Njk5OX0.VQJzWHt1BClMJUJ5RYGu5YyiUyJFikLN18gltZZ-x-M`,
+      Authorization: `Bearer ${token}`,
     },
   };
   try{
     const response = await axios.get("http://localhost:8080/api/v1/word",config);
-    console.log("response",response.data);
+    
     return response.data;
   }catch(err){
     console.log(err);
@@ -201,6 +203,36 @@ export async function getWord(): Promise<IWord> {
     return {id: 0, word: wordData};
   }
 }
+
+export async function getWords(token:string): Promise<Array<IWord>> {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try{
+    const response = await axios.get("http://localhost:8080/api/v1/all",config);
+    
+    return response.data;
+  }
+  catch(err){
+    console.log(err);
+    return [];
+  }
+}
+
+export async function getDefinition(word:string): Promise<string> {
+  try{
+    const response = await axios.get(`http://localhost:8080/api/v1/dictionary/${word}`);
+    return response.data[0].meanings[0].definitions[0].definition;
+  }
+  catch(err){
+    console.log(err);
+    return "Não foi possível encontrar a definição dessa palavra";
+  }
+}
+
+
 
 
 

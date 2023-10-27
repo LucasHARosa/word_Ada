@@ -4,15 +4,18 @@ import { GuessGrid } from "../components/guess-grid/GuessGrid";
 import { Keyboard } from "../components/Keyboard/Keyboard";
 import toast from "react-hot-toast";
 import {
+  IWord,
   checkWord,
   getAvailableTiles,
   getGameWord,
   getLocalStorage,
   getWord,
+  getWords,
   loadGameData,
   saveGameData,
   saveGameWord,
   toastError,
+  validateWordAPI,
 } from "../lib/helpers";
 import { validateWord } from "../lib/helpers";
 import { checkWin } from "../lib/helpers";
@@ -20,6 +23,7 @@ import { gameData } from "../lib/interfaces";
 import { useContext } from "react";
 import { gameEndedContext } from "../pages/_app";
 import axios from "axios";
+import { Login } from "../components/Login/login";
 
 const Game: NextPage = () => {
   const arr = Array.apply(null, Array(30)).map(() => "");
@@ -30,7 +34,7 @@ const Game: NextPage = () => {
   const [isEndOfRow, setIsEndOfRow] = useState(false);
   const [guess, setGuess] = useState<string[]>([]);
   const [wordColors, setWordColors] = useState(arr2);
-  const [isKeyboardActive, setIsKeyboardActive] = useState(true);
+  const [isKeyboardActive, setIsKeyboardActive] = useState(false);
   const [notInWord, setNotInWord] = useState<string[]>([]);
   const {gameEnded, setGameEnded } = useContext(gameEndedContext);
   const [inWordWrongPosition, setInWordWrongPosition] = useState<string[]>([]);
@@ -41,6 +45,10 @@ const Game: NextPage = () => {
   const keyLetters = "abcdefghijklmnopqrstuvwxyz";
   const [dailyWord, setDailyWord] = useState("");
   const [words, setWords] = useState<string[]>([]);
+  const [token, setToken] = useState<string>("");
+  const [isLoginOpen, setIsLoginOpen] = useState(true);
+
+  const [wordsApi, setWordsApi] = useState<Array<IWord>>(Array(0));
   
 
   const gameData: gameData = {
@@ -69,25 +77,7 @@ const Game: NextPage = () => {
     setGuess(tiles.slice(rowStart, rowStart + 5));
   }, [tiles, rowStart]);
 
-  useEffect(() => {
-
-    getWordApi();
-    // async function fetchWordData() {
-    //   try {
-    //     const response = await fetch('http://localhost:8080/api/v1/word');
-    //     if (!response.ok) {
-    //       throw new Error('Network response was not ok');
-    //     }
-
-    //     const data = await response.json();
-    //     console.log("repsotas",data);
-    //   } catch (error) {
-    //     console.error('Error fetching data:', error);
-    //   }
-    // }
-
-    //fetchWordData();
-  },[]);
+  
 
   useEffect(() => {
     // setDailyWord(getDailyWord());
@@ -130,14 +120,18 @@ const Game: NextPage = () => {
     dailyWord,
   ]);
   //Função ADA
-  async function getWordApi(){
+  async function getWordApi(token:string){
     const a = getGameWord();
-    //console.log("Aqui a palavra2 =>",a);
-    const wordApi = getWord();
+    
+    const wordApi = getWord(token);
+    const wordsApi = getWords(token)
     if(wordApi !== undefined){
       saveGameWord((await wordApi).word);
       setDailyWord((await wordApi).word);
-      //console.log("Aqui a palavra =>",(await wordApi).word);
+      
+    }
+    if(wordsApi !== undefined){
+      setWordsApi(await wordsApi);
     }
   }
 
@@ -213,7 +207,7 @@ const Game: NextPage = () => {
       setActiveTile(rowStart + 5);
     }
 
-    if (validateWord(guess.toString().replaceAll(",", "").toUpperCase())) {
+    if (validateWordAPI(wordsApi,guess.toString().replaceAll(",", ""))) {
       const tempArr = [...wordColors];
       let tempWordColors = checkWord(guess, dailyWord.toLowerCase().split(""));
 
@@ -293,7 +287,7 @@ const Game: NextPage = () => {
   }
 
   function handleKeyDown(e: KeyboardEvent) {
-    if (!gameEnded) {
+    if (!gameEnded && token !== "") {
       if (e.key === "Enter") {
         handleSubmit();
       }
@@ -319,10 +313,34 @@ const Game: NextPage = () => {
     }
   }
   function handleclick(){
-    console.log("aaa")
+    getWordApi(token);
   }
+
+  function handleCloseLogin() {
+    setIsLoginOpen(false);
+    
+  }
+
+  async function handleLogin(user:string, pass:string) {
+    try{
+      const response = await axios.post("http://localhost:8080/api/v1/auth/login",{
+        "email": user,
+        "password": pass
+      });
+      console.log(response.data);
+      setToken(response.data.token);
+      getWordApi(response.data.token);
+      handleCloseLogin();
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+  console.log(gameData)
+
   return (
     <>
+
       <GuessGrid
         grid={tiles}
         activeTile={activeTile}
@@ -344,6 +362,7 @@ const Game: NextPage = () => {
       <button onClick={()=>handleclick()}>
         {dailyWord}
       </button>
+      <Login isOpen={isLoginOpen} handleLogin={handleLogin} />
     </>
   );
 };

@@ -6,6 +6,7 @@ interface EndScreenProps {
   onRequestClose: () => void;
   dailyWord?: string;
   wordColors: number[];
+  definition?: string;
 }
 
 export function EndScreen({
@@ -13,11 +14,9 @@ export function EndScreen({
   onRequestClose,
   dailyWord,
   wordColors,
+  definition,
 }: EndScreenProps) {
-  //const word = "a";
-  //const word = getGameWord()
-  //const word = getLocalStorage("@Verbo:word");
-  //console.log("palavra = >",word)
+  
   return (
     <Modal
       isOpen={isOpen}
@@ -26,12 +25,16 @@ export function EndScreen({
       className="react-modal-content"
       ariaHideApp={false}
     >
-      <h1 className="dailyWordInfo">Palavra do dia: {dailyWord} </h1>
+      <h1 className="dailyWordInfo">Game word:  </h1>
+      <h1 className="greenText2">{dailyWord}</h1>
       {/* <button className="share" onClick={() => getCopyPaste(wordColors)}>
         Copiar Resultado
       </button> */}
+      <p>
+        Definition: {definition}
+      </p>
       <span className="creatorInfo">
-        Jogo feito por:{" "}
+        Front by:{" "}
         <a href="https://github.com/LucasHARosa" target="_blank" rel="noreferrer">
           Lucas Rosa
         </a>

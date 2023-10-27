@@ -6,7 +6,8 @@ import { createContext, useEffect, useState } from "react";
 import { EndScreen } from "../components/endModal/EndScreen";
 import { ParticleAmong } from "../components/Particles/particlesAmong";
 import axios from "axios";
-import { getGameWord } from "../lib/helpers";
+import { getDefinition, getGameWord } from "../lib/helpers";
+import { Login } from "../components/Login/login";
 
 interface gameEndedContext {
   gameEnded: boolean;
@@ -23,12 +24,13 @@ export const gameEndedContext = createContext<gameEndedContext>(
 );
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  
+  const [isOpen, setIsOpen] = useState(false);
   const [isEndOpen, setIsEndOpen] = useState(false);
   const [dailyWord, setDailyWord] = useState("");
   const [wordColors, setWordColors] = useState<number[]>([]);
   const [gameEnded, setGameEnded] = useState(false);
-  const [words, setWords] = useState<IWord>();
+  const [definition, setDefinition] = useState("");
 
   // useEffect(() => {
   //   const firstTime = localStorage.getItem("@Verbo:FirstTime");
@@ -58,8 +60,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 
   useEffect(() => {
-    const word = getGameWord();
-    setDailyWord(word || "");
+    async function getall(){
+      const word = getGameWord() || "";
+      const definition = getDefinition(word) ;
+      setDefinition(await definition);
+      setDailyWord(word);
+    }
+    
+    getall();
   }, [gameEnded, setGameEnded]);
 
   function handleCloseTutorial() {
@@ -70,7 +78,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     setIsEndOpen(false);
   }
 
-  console.log(words);
+  
+
+  
   return (
     <>
       <gameEndedContext.Provider value={{ gameEnded, setGameEnded }}>
@@ -79,7 +89,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           onRequestClose={handleCloseEndScreen}
           dailyWord={dailyWord}
           wordColors={wordColors}
+          definition={definition}
         />
+        
         <Tutorial isOpen={isOpen} onRequestClose={handleCloseTutorial} />
         <Component {...pageProps} />
         <Toaster />

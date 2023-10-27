@@ -45,6 +45,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
   
   p{
     width: 100%;
@@ -52,7 +53,11 @@ body {
     margin-top: 10px;
     align-items: flex-start;
   }
+  h1{
+    margin: 0;
+  }
 
+  
   img {
     width: 15em;
     margin: 10px;
@@ -69,6 +74,9 @@ body {
 
 .greenText {
   color: #3ff12f;
+}
+.greenText2 {
+  color: #1b6814;
 }
 
 .yellowText {
@@ -112,8 +120,8 @@ body {
 }
 
 .creatorInfo {
-  font-size: 1.2rem;
-  margin-top: 3rem;
+  font-size: 0.8rem;
+  margin-top: 1rem;
 
   a,
   a:visited {
