@@ -12,7 +12,7 @@ export function ParticleAmong ()  {
     }, []);
 
     const particlesLoaded = useCallback(async (container: Container | undefined) => {
-        await console.log(container);
+        
     }, []);
     return (
         <Particles

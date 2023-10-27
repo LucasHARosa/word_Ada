@@ -182,9 +182,17 @@ export interface IWord {
   word: string;
 }
 
+
+
 export async function getWord(): Promise<IWord> {
+  console.log("getWord");
+  const config = {
+    headers: {
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6Imx1QGdtYWlsLmNvbSIsImV4cCI6MTY5ODM3Njk5OX0.VQJzWHt1BClMJUJ5RYGu5YyiUyJFikLN18gltZZ-x-M`,
+    },
+  };
   try{
-    const response = await axios.get("http://localhost:8080/api/v1/word");
+    const response = await axios.get("http://localhost:8080/api/v1/word",config);
     console.log("response",response.data);
     return response.data;
   }catch(err){

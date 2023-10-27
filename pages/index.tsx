@@ -70,7 +70,23 @@ const Game: NextPage = () => {
   }, [tiles, rowStart]);
 
   useEffect(() => {
+
     getWordApi();
+    // async function fetchWordData() {
+    //   try {
+    //     const response = await fetch('http://localhost:8080/api/v1/word');
+    //     if (!response.ok) {
+    //       throw new Error('Network response was not ok');
+    //     }
+
+    //     const data = await response.json();
+    //     console.log("repsotas",data);
+    //   } catch (error) {
+    //     console.error('Error fetching data:', error);
+    //   }
+    // }
+
+    //fetchWordData();
   },[]);
 
   useEffect(() => {
@@ -116,12 +132,12 @@ const Game: NextPage = () => {
   //Função ADA
   async function getWordApi(){
     const a = getGameWord();
-    console.log("Aqui a palavra2 =>",a);
+    //console.log("Aqui a palavra2 =>",a);
     const wordApi = getWord();
     if(wordApi !== undefined){
       saveGameWord((await wordApi).word);
       setDailyWord((await wordApi).word);
-      console.log("Aqui a palavra =>",(await wordApi).word);
+      //console.log("Aqui a palavra =>",(await wordApi).word);
     }
   }
 

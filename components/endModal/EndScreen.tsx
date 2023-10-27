@@ -14,10 +14,10 @@ export function EndScreen({
   dailyWord,
   wordColors,
 }: EndScreenProps) {
-  const word = "a";
+  //const word = "a";
   //const word = getGameWord()
   //const word = getLocalStorage("@Verbo:word");
-  console.log("palavra = >",word)
+  //console.log("palavra = >",word)
   return (
     <Modal
       isOpen={isOpen}
