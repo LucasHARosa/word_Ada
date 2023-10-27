@@ -333,10 +333,9 @@ const Game: NextPage = () => {
       handleCloseLogin();
     }
     catch(err){
-      console.log(err);
+      //console.log(err);
     }
   }
-  console.log(gameData)
 
   return (
     <>
@@ -359,9 +358,9 @@ const Game: NextPage = () => {
         handleDelete={handleDelete}
         handleSubmit={handleSubmit}
       />
-      <button onClick={()=>handleclick()}>
+      {/* <button onClick={()=>handleclick()}>
         {dailyWord}
-      </button>
+      </button> */}
       <Login isOpen={isLoginOpen} handleLogin={handleLogin} />
     </>
   );

@@ -25,7 +25,7 @@ export function validateWord(word: string) {
 }
 //ada
 export function validateWordAPI(words:Array<IWord>,word: string) {
-  console.log("validateWordAPI",words.length,word);
+  //console.log("validateWordAPI",words.length,word);
   if (words.some((el) => el.word === word)) {
     return true;
   }
@@ -33,7 +33,7 @@ export function validateWordAPI(words:Array<IWord>,word: string) {
 }
 
 export function checkWin(word: string[], dailyWord: string[]) {
-  console.log(word, dailyWord);
+  //console.log(word, dailyWord);
   if (word.toString() === dailyWord.toString()) {
     return true;
   }
@@ -195,7 +195,7 @@ export async function getWord(token:string): Promise<IWord> {
   };
   try{
     const response = await axios.get("http://localhost:8080/api/v1/word",config);
-    
+    console.log("Palavra do jogo =>",response.data);
     return response.data;
   }catch(err){
     console.log(err);
@@ -212,7 +212,7 @@ export async function getWords(token:string): Promise<Array<IWord>> {
   };
   try{
     const response = await axios.get("http://localhost:8080/api/v1/all",config);
-    
+    console.log("Puxando todas as palavras =>",response.data);
     return response.data;
   }
   catch(err){
@@ -224,11 +224,12 @@ export async function getWords(token:string): Promise<Array<IWord>> {
 export async function getDefinition(word:string): Promise<string> {
   try{
     const response = await axios.get(`http://localhost:8080/api/v1/dictionary/${word}`);
+    console.log("Definição da palavra =>",response.data);
     return response.data[0].meanings[0].definitions[0].definition;
   }
   catch(err){
     console.log(err);
-    return "Não foi possível encontrar a definição dessa palavra";
+    return "Unable to find the definition of this word";
   }
 }
 
